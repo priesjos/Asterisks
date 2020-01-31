@@ -25,6 +25,22 @@ public class Game extends JFrame implements KeyListener {
         new Game();
     }
 
+    public boolean isUpPressed() {
+        return upPressed;
+    }
+
+    public boolean isLeftPressed() {
+        return leftPressed;
+    }
+
+    public boolean isRightPressed() {
+        return rightPressed;
+    }
+
+    public boolean isSpacePressed() {
+        return spacePressed;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -32,11 +48,33 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        if (e.getKeyCode() == KeyEvent.VK_UP){
+            upPressed = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT){
+            leftPressed = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+            rightPressed = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE){
+            spacePressed = true;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if (e.getKeyCode() == KeyEvent.VK_UP){
+            upPressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT){
+            leftPressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+            rightPressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE){
+            spacePressed = false;
+        }
     }
 }
