@@ -2,7 +2,8 @@ import java.awt.*;
 
 public class Ship {
 
-    int x, y;
+    int x;
+    int y;
     double direction;
     boolean moving;
     int dTheta = 4, speed = 12;
@@ -29,6 +30,14 @@ public class Ship {
         }
         g.setColor(Color.WHITE);
         g.fillPolygon(pointsX, pointsY, 3 );
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public double getDirection(){
