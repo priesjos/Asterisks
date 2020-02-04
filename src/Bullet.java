@@ -6,13 +6,28 @@ public class Bullet {
     long bulletTime = 0;
 
     public Bullet(Ship ship){
-        x = ship.getX();
+        x = ship.getX() - ship.getWIDTH()/2;
         y = ship.getY();
     }
 
     public void move(Ship ship){
         x += (speed * (float)Math.cos(Math.toRadians(ship.getDirection() - 90)));
         y += (speed * (float)Math.sin(Math.toRadians(ship.getDirection() - 90)));
+    }
+
+    public void wrap(Screen screen){
+        if (x <= 0){
+            x = screen.getWidth();
+        }
+        if (x > screen.getWidth()){
+            x = 0;
+        }
+        if (y <= 0){
+            y = screen.getHeight();
+        }
+        if (y > screen.getHeight()){
+            y = 0;
+        }
     }
 
     public void paint(Graphics g){

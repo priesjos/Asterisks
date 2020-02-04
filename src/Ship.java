@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class Ship {
 
-    int x;
-    int y;
+    final int WIDTH = 10;
+    int x, y;
     double direction;
     boolean moving;
     int dTheta = 4, speed = 12;
@@ -24,9 +24,6 @@ public class Ship {
             for (int i = 0; i < pointsY.length; i++){
                 pointsY[i] += speed*(float)Math.sin(Math.toRadians(direction - 90));
             }
-            //pointsX[0] += 10*(float)Math.cos(Math.toRadians(direction - 90));
-            //pointsX[1] += 10*(float)Math.cos(Math.toRadians(direction - 90));
-            ///pointsX[2] += 10*(float)Math.cos(Math.toRadians(direction - 90));
         }
         g.setColor(Color.WHITE);
         g.fillPolygon(pointsX, pointsY, 3 );
@@ -38,6 +35,10 @@ public class Ship {
 
     public int getY() {
         return y;
+    }
+
+    public int getWIDTH(){
+        return WIDTH;
     }
 
     public double getDirection(){
@@ -58,5 +59,20 @@ public class Ship {
         moving = true;
         x += (speed * (float)Math.cos(Math.toRadians(direction - 90)));
         y += (speed * (float)Math.sin(Math.toRadians(direction - 90)));
+    }
+
+    public void wrap(Screen screen){
+        if (x <= 0){
+            x = screen.getWidth();
+        }
+        if (x > screen.getWidth()){
+            x = 0;
+        }
+        if (y <= 0){
+            y = screen.getHeight();
+        }
+        if (y > screen.getHeight()){
+            y = 0;
+        }
     }
 }
