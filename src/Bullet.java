@@ -1,9 +1,10 @@
 import java.awt.*;
 
 public class Bullet {
-    int x, y, diameter = 10;
+    int x, y, diameter = 20;
     int speed = 24, dx, dy = 10;
     long bulletTime = 0;
+    boolean remove;
 
     public Bullet(Ship ship){
         x = ship.getX() - ship.getWIDTH()/2;
@@ -35,6 +36,10 @@ public class Bullet {
         g.fillOval(x, y, diameter, diameter/2);
     }
 
+    public Rectangle getBounds(){
+        return new Rectangle(x, y, diameter, diameter);
+    }
+
     public int getX(){
         return x;
     }
@@ -45,5 +50,13 @@ public class Bullet {
 
     public long getBulletTime(){
         return bulletTime;
+    }
+
+    public boolean getRemove(){
+        return remove;
+    }
+
+    public void setRemove(boolean val){
+        remove = val;
     }
 }

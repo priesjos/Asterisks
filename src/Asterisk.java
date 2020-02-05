@@ -5,6 +5,15 @@ public class Asterisk {
     int x, y, diameter;
     double direction;
     int speed, dx, dy;
+    boolean remove;
+
+    public Asterisk(int diameter, int x, int y){
+        this.x = x;
+        this.y = y;
+        this.diameter = diameter;
+        direction = (int)(Math.random()*361);
+        speed = MIN_SPEED/diameter;
+    }
 
     public Asterisk(Screen screen){
         x = screen.getWidth()*(int)(Math.random()*2);
@@ -40,11 +49,31 @@ public class Asterisk {
         }
     }
 
+    public Rectangle getBounds(){
+        return new Rectangle(x, y, diameter, diameter);
+    }
+
     public void paint(Graphics g){
         g.setColor(Color.WHITE);
         g.drawLine(x+diameter/2, y, x-diameter/2, y);
         g.drawLine(x+diameter/3, y-diameter/3, x-diameter/3, y+diameter/3);
         g.drawLine(x-diameter/3, y-diameter/3, x+diameter/3, y+diameter/3);
+    }
+
+    public int getDiameter(){
+        return diameter;
+    }
+
+    public int getMIN_DIAMETER(){
+        return MIN_DIAMETER;
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
     }
 
     public void setX(int newX){
@@ -54,5 +83,14 @@ public class Asterisk {
     public void setY(int newY){
         y = newY;
     }
+
+    public boolean getRemove(){
+        return remove;
+    }
+
+    public void setRemove(boolean val){
+        remove = val;
+    }
+
 
 }

@@ -6,7 +6,7 @@ public class Ship {
     int x, y;
     double direction;
     boolean moving;
-    int dTheta = 4, speed = 12;
+    int dTheta = 4, speed = 8 ;
 
     public Ship(Screen screen){
         x = screen.getWidth()/2;
