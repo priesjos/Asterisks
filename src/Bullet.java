@@ -3,6 +3,7 @@ import java.awt.*;
 public class Bullet {
     int x, y, diameter = 20;
     int speed = 24, dx, dy = 10;
+    double direction;
     long bulletTime = 0;
     boolean remove;
 
@@ -11,9 +12,9 @@ public class Bullet {
         y = ship.getY();
     }
 
-    public void move(Ship ship){
-        x += (speed * (float)Math.cos(Math.toRadians(ship.getDirection() - 90)));
-        y += (speed * (float)Math.sin(Math.toRadians(ship.getDirection() - 90)));
+    public void move(){
+        x += (speed * (float)Math.cos(Math.toRadians(direction - 90)));
+        y += (speed * (float)Math.sin(Math.toRadians(direction - 90)));
     }
 
     public void wrap(Screen screen){
@@ -33,11 +34,18 @@ public class Bullet {
 
     public void paint(Graphics g){
         g.setColor(Color.WHITE);
-        g.fillOval(x, y, diameter, diameter/2);
+        g.fillOval(x, y, diameter/2, diameter);
     }
 
     public Rectangle getBounds(){
         return new Rectangle(x, y, diameter, diameter);
+    }
+
+    public void checkHit(Asterisk target){
+        if (getBounds().intersects(target.getBounds())){
+            target.setRemove(true);
+            //setRemove(true); //sometimes disabled for op penetrating shot
+        }
     }
 
     public int getX(){
@@ -51,6 +59,10 @@ public class Bullet {
     public long getBulletTime(){
         return bulletTime;
     }
+
+    public double getDirection() { return direction; }
+
+    public void setDirection(double val) { direction = val; }
 
     public boolean getRemove(){
         return remove;

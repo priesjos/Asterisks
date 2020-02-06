@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Asterisk {
-    final int MAX_DIAMETER = 128, MIN_DIAMETER = 32, MIN_SPEED = 256;
+    final int MAX_DIAMETER = 128, MIN_DIAMETER = 32, MIN_SPEED = 128;
     int x, y, diameter;
     double direction;
     int speed, dx, dy;
@@ -16,22 +16,17 @@ public class Asterisk {
     }
 
     public Asterisk(Screen screen){
-        x = screen.getWidth()*(int)(Math.random()*2);
-        y = screen.getHeight()*(int)(Math.random()*2);
+        x = screen.getWidth()*(int)(Math.random());
+        y = screen.getHeight()*(int)(Math.random());
         diameter = MIN_DIAMETER*(int)(Math.ceil(Math.random()*4));
         direction = (int)(Math.random()*361);
         speed = MIN_SPEED/diameter;
     }
 
-    public void spawn(int spawnX, int spawnY){
-        x = spawnX;
-        y = spawnY;
-    }
-
     public void move(){
         //dx and dy move along some random angle
-        x += (speed * (float)Math.cos(Math.toRadians(direction - 90)));
-        y += (speed * (float)Math.sin(Math.toRadians(direction - 90)));
+        x += (speed * (float)Math.cos(Math.toRadians(direction)));
+        y += (speed * (float)Math.sin(Math.toRadians(direction)));
     }
 
     public void wrap(Screen screen){
@@ -50,12 +45,12 @@ public class Asterisk {
     }
 
     public Rectangle getBounds(){
-        return new Rectangle(x, y, diameter, diameter);
+        return new Rectangle(x-diameter/2, y-diameter/2, diameter, diameter);
     }
 
     public void paint(Graphics g){
         g.setColor(Color.WHITE);
-        g.drawLine(x+diameter/2, y, x-diameter/2, y);
+        g.drawLine(x, y+diameter/2, x, y-diameter/2);
         g.drawLine(x+diameter/3, y-diameter/3, x-diameter/3, y+diameter/3);
         g.drawLine(x-diameter/3, y-diameter/3, x+diameter/3, y+diameter/3);
     }

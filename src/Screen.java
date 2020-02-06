@@ -49,49 +49,17 @@ public class Screen extends JPanel implements ActionListener {
         }
     }
 
-    public void checkCollisions(){
-
-        for (int i = bullets.size()-1; i  >= 0; i--)
-        {
-            for (int j = 0; j < asterisks.size(); j++)
-            {
-                if (asterisks.get(j) != null)
-                {
-                    if(bullets.get(i).getBounds().intersects(asterisks.get(i).getBounds())){
-                        bullets.get(i).setRemove(true);
-                        asterisks.get(j).setRemove(true);
-                    }
-                }
-
-                if (asterisks.get(j).getRemove())
-                {
-                    if (asterisks.get(j).getDiameter() > asterisks.get(j).getMIN_DIAMETER()){
-                        int spawnDiameter = asterisks.get(j).getDiameter()/2;
-                        int spawnX = asterisks.get(j).getX();
-                        int spawnY = asterisks.get(j).getY();
-                        asterisks.add(new Asterisk(spawnDiameter, spawnX, spawnY));
-                        asterisks.add(new Asterisk(spawnDiameter, spawnX, spawnY));
-                    }
-
-                    asterisks.remove(asterisks.get(j));
-                }
-            }
-
-            if (bullets.get(i).getRemove())
-                bullets.remove(bullets.get(i));
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         long currentTime = System.currentTimeMillis();
 
         ship.wrap(this);
-        checkCollisions();
+
         //a bunch of input code
         if (game.isSpacePressed() && currentTime - bulletDelay >= 250){
             bullets.add(new Bullet(ship));
             bullets.get(bullets.size()-1).bulletTime = System.currentTimeMillis();
+            bullets.get(bullets.size()-1).direction = ship.getDirection();
             bulletDelay = System.currentTimeMillis();
         }
 
@@ -106,26 +74,43 @@ public class Screen extends JPanel implements ActionListener {
         if (game.isUpPressed()){
             ship.move();
         }
+
         //update bullets on screen
         for (int i = bullets.size()-1; i >= 0; i--){
-            bullets.get(i).move(ship);
+            bullets.get(i).move();
             bullets.get(i).wrap(this);
+            for (int j = asterisks.size()-1; j >= 0; j--){
+                bullets.get(i).checkHit(asterisks.get(j));
+            }
 
-            if (currentTime - bullets.get(i).bulletTime >= 700){
+            if (/*currentTime - bullets.get(i).bulletTime >= 700 ||*/ bullets.get(i).getRemove()){
                 bullets.remove(bullets.get(i));
             }
         }
+
         //update asterisks on screen
         for (int i = asterisks.size()-1; i >= 0; i--){
-            asterisks.get(i).move();
             asterisks.get(i).wrap(this);
+            asterisks.get(i).move();
+
+            if (asterisks.get(i).getRemove())
+            {
+                if (asterisks.get(i).getDiameter() > asterisks.get(i).getMIN_DIAMETER()){
+                    int spawnDiameter = asterisks.get(i).getDiameter()/2;
+                    int spawnX = asterisks.get(i).getX();
+                    int spawnY = asterisks.get(i).getY();
+                    asterisks.add(new Asterisk(spawnDiameter, spawnX, spawnY));
+                    asterisks.add(new Asterisk(spawnDiameter, spawnX, spawnY));
+                }
+
+                asterisks.remove(asterisks.get(i));
+            }
         }
 
-        if (currentTime - asteriskDelay >= 4800){
+        if (currentTime - asteriskDelay >= 2400){
             asterisks.add(new Asterisk(this));
             asteriskDelay = System.currentTimeMillis();
         }
-
 
         repaint();
     }

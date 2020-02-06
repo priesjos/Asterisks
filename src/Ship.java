@@ -16,7 +16,7 @@ public class Ship {
 
     public void paint(Graphics g){
         int[] pointsX = {x-10, x, x+10};
-        int[] pointsY = {y, y-30, y};
+        int[] pointsY = {y, y-30, y};/*
         if (moving){
             for (int i= 0; i < pointsX.length; i++){
                 pointsX[i] += speed*(float)Math.cos(Math.toRadians(direction - 90));
@@ -24,9 +24,14 @@ public class Ship {
             for (int i = 0; i < pointsY.length; i++){
                 pointsY[i] += speed*(float)Math.sin(Math.toRadians(direction - 90));
             }
-        }
+        }*/
         g.setColor(Color.WHITE);
+        g.drawRect(x, y, WIDTH, WIDTH);
         g.fillPolygon(pointsX, pointsY, 3 );
+    }
+
+    public Rectangle getBounds(){
+        return new Rectangle(x, y, WIDTH, WIDTH);
     }
 
     public int getX() {
