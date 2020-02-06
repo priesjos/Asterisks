@@ -44,7 +44,7 @@ public class Bullet {
     public void checkHit(Asterisk target){
         if (getBounds().intersects(target.getBounds())){
             target.setRemove(true);
-            //setRemove(true); //sometimes disabled for op penetrating shot
+            setRemove(true); //sometimes disabled for op penetrating shot
         }
     }
 

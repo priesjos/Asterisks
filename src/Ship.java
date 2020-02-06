@@ -1,7 +1,9 @@
 import java.awt.*;
+import java.net.URL;
 
 public class Ship {
 
+    Image shipSprite;
     final int WIDTH = 10;
     int x, y;
     double direction;
@@ -14,24 +16,26 @@ public class Ship {
         direction = 0.0;
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g, Screen screen){
         int[] pointsX = {x-10, x, x+10};
-        int[] pointsY = {y, y-30, y};/*
-        if (moving){
-            for (int i= 0; i < pointsX.length; i++){
-                pointsX[i] += speed*(float)Math.cos(Math.toRadians(direction - 90));
-            }
-            for (int i = 0; i < pointsY.length; i++){
-                pointsY[i] += speed*(float)Math.sin(Math.toRadians(direction - 90));
-            }
-        }*/
+        int[] pointsY = {y, y-30, y};
         g.setColor(Color.WHITE);
         g.drawRect(x, y, WIDTH, WIDTH);
-        g.fillPolygon(pointsX, pointsY, 3 );
+        g.drawImage(shipSprite, x, y, screen);
+
+        //g.fillPolygon(pointsX, pointsY, 3 );
     }
 
     public Rectangle getBounds(){
         return new Rectangle(x, y, WIDTH, WIDTH);
+    }
+
+    public void loadImage(){
+        ClassLoader cl = getClass().getClassLoader();
+        URL imageURL = cl.getResource("red_ship.png");
+        if (imageURL != null){
+            shipSprite = Toolkit.getDefaultToolkit().createImage(imageURL);
+        }
     }
 
     public int getX() {

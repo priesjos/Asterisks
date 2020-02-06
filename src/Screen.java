@@ -28,6 +28,7 @@ public class Screen extends JPanel implements ActionListener {
     //initialize objects in game
     public void init(){
         ship = new Ship(this);
+        ship.loadImage();
         for (int i = 0; i < 3; i++){
             asterisks.add(new Asterisk(this));
         }
@@ -38,7 +39,7 @@ public class Screen extends JPanel implements ActionListener {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        ship.paint(g);
+        ship.paint(g, this);
 
         for (Asterisk asterisk: asterisks){
             asterisk.paint(g);
