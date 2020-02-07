@@ -4,6 +4,7 @@ import java.net.URL;
 public class Ship {
 
     final int WIDTH = 10;
+    final int FIRE_RATE = 150; //measured in ms
     int x, y;
     double direction;
     boolean turning;
@@ -17,24 +18,23 @@ public class Ship {
     }
 
     public void paint(Graphics g, Screen screen){
-        int[] pointsX = {x-WIDTH/2, x, x+WIDTH/2};
-        int[] pointsY = {y+WIDTH, y-WIDTH, y+WIDTH};
-        if (turning){
-            pointsX[1] += (24 * (float)Math.cos(Math.toRadians(direction - 90)));
-            pointsY[1] += (24 * (float)Math.sin(Math.toRadians(direction - 90)));
-            pointsX[0] += (24 * (float)Math.cos(Math.toRadians(direction + 130)));
-            pointsY[0] += (24 * (float)Math.sin(Math.toRadians(direction + 130)));
-            pointsX[2] += (24 * (float)Math.cos(Math.toRadians(direction + 105)));
-            pointsY[2] += (24 * (float)Math.sin(Math.toRadians(direction + 105)));
-        }
+        int turretX = x;
+        int turretY = y;
+
+        turretX += (24 * (float)Math.cos(Math.toRadians(direction -90)));
+        turretY += (24 * (float)Math.sin(Math.toRadians(direction -90)));
 
         g.setColor(Color.WHITE);
-        g.drawRect(x, y, WIDTH, WIDTH);
-        g.drawPolygon(pointsX, pointsY, 3);
+        g.fillRect(x, y, WIDTH, WIDTH);
+        g.drawRect(turretX, turretY, WIDTH/4, WIDTH/4);
     }
 
     public Rectangle getBounds(){
         return new Rectangle(x, y, WIDTH, WIDTH);
+    }
+
+    public int getFIRE_RATE() {
+        return FIRE_RATE;
     }
 
     public int getX() {

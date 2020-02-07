@@ -51,7 +51,7 @@ public class Asterisk {
     }
 
     public Rectangle getBounds(){
-        return new Rectangle(x-diameter/2, y-diameter/2, diameter, diameter);
+        return new Rectangle(x-diameter/2, y-diameter/2, diameter+3, diameter+3);
     }
 
     public void paint(Graphics g){

@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Bullet {
-    int x, y, diameter = 14;
+    int x, y, diameter = 7;
     int speed = 24, dx, dy = 10;
     double direction;
     long bulletTime = 0;
