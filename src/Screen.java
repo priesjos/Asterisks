@@ -28,7 +28,6 @@ public class Screen extends JPanel implements ActionListener {
     //initialize objects in game
     public void init(){
         ship = new Ship(this);
-        ship.loadImage();
         for (int i = 0; i < 3; i++){
             asterisks.add(new Asterisk(this));
         }
@@ -55,6 +54,9 @@ public class Screen extends JPanel implements ActionListener {
         long currentTime = System.currentTimeMillis();
 
         ship.wrap(this);
+        if (ship.getRemove()){
+            System.out.println("die");
+        }
 
         //a bunch of input code
         if (game.isSpacePressed() && currentTime - bulletDelay >= 250){
@@ -84,7 +86,7 @@ public class Screen extends JPanel implements ActionListener {
                 bullets.get(i).checkHit(asterisks.get(j));
             }
 
-            if (/*currentTime - bullets.get(i).bulletTime >= 700 ||*/ bullets.get(i).getRemove()){
+            if (currentTime - bullets.get(i).bulletTime >= 700 || bullets.get(i).getRemove()){
                 bullets.remove(bullets.get(i));
             }
         }
@@ -93,6 +95,7 @@ public class Screen extends JPanel implements ActionListener {
         for (int i = asterisks.size()-1; i >= 0; i--){
             asterisks.get(i).wrap(this);
             asterisks.get(i).move();
+            asterisks.get(i).checkHit(ship);
 
             if (asterisks.get(i).getRemove())
             {

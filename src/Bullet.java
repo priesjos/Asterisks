@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Bullet {
-    int x, y, diameter = 20;
+    int x, y, diameter = 14;
     int speed = 24, dx, dy = 10;
     double direction;
     long bulletTime = 0;
@@ -34,7 +34,7 @@ public class Bullet {
 
     public void paint(Graphics g){
         g.setColor(Color.WHITE);
-        g.fillOval(x, y, diameter/2, diameter);
+        g.fillOval(x, y, diameter, diameter);
     }
 
     public Rectangle getBounds(){

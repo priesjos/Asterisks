@@ -23,6 +23,12 @@ public class Asterisk {
         speed = MIN_SPEED/diameter;
     }
 
+    public void checkHit(Ship ship){
+        if (getBounds().intersects(ship.getBounds())){
+            ship.setRemove(true);
+        }
+    }
+
     public void move(){
         //dx and dy move along some random angle
         x += (speed * (float)Math.cos(Math.toRadians(direction)));

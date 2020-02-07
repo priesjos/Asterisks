@@ -3,11 +3,11 @@ import java.net.URL;
 
 public class Ship {
 
-    Image shipSprite;
     final int WIDTH = 10;
     int x, y;
     double direction;
-    boolean moving;
+    boolean turning;
+    boolean remove;
     int dTheta = 4, speed = 8 ;
 
     public Ship(Screen screen){
@@ -17,25 +17,24 @@ public class Ship {
     }
 
     public void paint(Graphics g, Screen screen){
-        int[] pointsX = {x-10, x, x+10};
-        int[] pointsY = {y, y-30, y};
+        int[] pointsX = {x-WIDTH/2, x, x+WIDTH/2};
+        int[] pointsY = {y+WIDTH, y-WIDTH, y+WIDTH};
+        if (turning){
+            pointsX[1] += (24 * (float)Math.cos(Math.toRadians(direction - 90)));
+            pointsY[1] += (24 * (float)Math.sin(Math.toRadians(direction - 90)));
+            pointsX[0] += (24 * (float)Math.cos(Math.toRadians(direction + 130)));
+            pointsY[0] += (24 * (float)Math.sin(Math.toRadians(direction + 130)));
+            pointsX[2] += (24 * (float)Math.cos(Math.toRadians(direction + 105)));
+            pointsY[2] += (24 * (float)Math.sin(Math.toRadians(direction + 105)));
+        }
+
         g.setColor(Color.WHITE);
         g.drawRect(x, y, WIDTH, WIDTH);
-        g.drawImage(shipSprite, x, y, screen);
-
-        //g.fillPolygon(pointsX, pointsY, 3 );
+        g.drawPolygon(pointsX, pointsY, 3);
     }
 
     public Rectangle getBounds(){
         return new Rectangle(x, y, WIDTH, WIDTH);
-    }
-
-    public void loadImage(){
-        ClassLoader cl = getClass().getClassLoader();
-        URL imageURL = cl.getResource("red_ship.png");
-        if (imageURL != null){
-            shipSprite = Toolkit.getDefaultToolkit().createImage(imageURL);
-        }
     }
 
     public int getX() {
@@ -54,18 +53,26 @@ public class Ship {
         return direction;
     }
 
+    public boolean getRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean val) {
+        remove = val;
+    }
+
     public void turnLeft(){
+        turning = true;
         direction -= dTheta;
     }
 
     public void turnRight(){
+        turning = true;
         direction += dTheta;
     }
 
     public void move(){
         //move the ship along the angle Direction at speed Speed somehow
-        //pointsX[0] += (float)Math.cos(Math.toRadians(direction - 90));
-        moving = true;
         x += (speed * (float)Math.cos(Math.toRadians(direction - 90)));
         y += (speed * (float)Math.sin(Math.toRadians(direction - 90)));
     }
